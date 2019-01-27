@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Phaser Prototype</title>
+    <meta name="google" content="notranslate">
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="apple-touch-icon" href="images/icon.jpg"> <!-- make this -->
+    <link rel="stylesheet" href="stylesheet.css" type="text/css">
+    <link href="hover-min.css" rel="stylesheet" media="all">
+    <script src="phaser.min.js"></script>
+</head>
+<body>
+<div id="info">
+     <img src="images/logo.png" alt="website_logo" height="65%" width="65%">
+           <ul class="nav">
+            <li><a href="aboutme.html"  class="hvr-pop">About me</a></li>
+            <li><a href="index.html#game1"  class="hvr-pop">Maze Game</a></li>
+            <li><a href="index.html#game2"  class="hvr-pop">Game menu</a></li>
+            <li><a href="index.html#game3"  class="hvr-pop">Platformer</a></li>
+            <li><a href="game.html#game4"  class="hvr-pop">Avoid'em game</a></li>
+            <li><a href="game.html#game5"  class="hvr-pop">Prototype</a></li>
+            <li><a href="game.html#game6"  class="hvr-pop">Endless runner</a></li>
+            <li><a href="text.html#game7"  class="hvr-pop">Flappy Clone</a></li>
+            <li><a href="PhaserPrototype.html"  class="hvr-pop">Phaser Prototype</a></li>
+            <li><a href="https://pikselitaidetta.wordpress.com/galleria/" target="_blank" class="hvr-pop">Pixel Art</a></li>
+        </ul>
+        <br>
+</div>
+    <div id="info2">
+        <h3>Janne Kyt&#246;l&#228;'s Games</h3>
+          <ul class="nav">
+            <li><a href="aboutme.html"  class="hvr-pop">About me</a></li>
+            <li><a href="index.html#game1"  class="hvr-pop">Maze Game</a></li>
+            <li><a href="index.html#game2"  class="hvr-pop">Game menu</a></li>
+            <li><a href="index.html#game3"  class="hvr-pop">Platformer</a></li>
+            <li><a href="game.html#game4"  class="hvr-pop">Avoid'em game</a></li>
+            <li><a href="game.html#game5"  class="hvr-pop">Prototype</a></li>
+            <li><a href="game.html#game6"  class="hvr-pop">Endless runner</a></li>
+            <li><a href="text.html#game7"  class="hvr-pop">Flappy Clone</a></li>
+            <li><a href="PhaserPrototype.html"  class="hvr-pop">Phaser Prototype</a></li>
+            <li><a href="https://pikselitaidetta.wordpress.com/galleria/" target="_blank" class="hvr-pop">Pixel Art</a></li>
+        </ul>
+    </div>
+    <div id="games">
+    <script type="text/javascript">
+    
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var char, sprite, hit, beast, text2, Phaser, sprite2;
+var score = 0;
+
+function preload() {
+    game.load.spritesheet('idle', 'images/idle.png', 104, 177, 62);
+    game.load.spritesheet('stab', 'images/stab.png', 104, 177, 62);
+    game.load.spritesheet('beastWake', 'images/BeastSpritesheet.png', 900, 400, 7);
+    game.load.image('beast', 'images/beast.png');   //static img that is not Used yet
+    game.load.image('cloud', 'images/cloud.png');
+    game.load.audio('hit', 'images/dmg.ogg');
+    game.load.audio('tada', 'images/tada.mp3');
+    game.load.image('achievement', 'images/achievement.png');
+
+}
+
+function create() {
+    
+    
+    text2 = game.add.text(20, 60, 'Score 0');
+    
+    //cloud
+    sprite = game.add.sprite(-100,game.rnd.integerInRange(80, 220), 'cloud');
+    var movement3 = game.add.tween(sprite).to ({x: 1525 }, game.rnd.integerInRange(19000, 25000), Phaser.Easing.Linear.None, true);
+    movement3.repeat(-1, 1000);
+    sprite.anchor.setTo(0.5, 0.5);
+    
+    //main character idle
+    char = game.add.sprite(game.world.centerX, game.world.centerY-100, 'idle');
+    char.anchor.set(0.5);
+    
+    //beast
+    beast = game.add.sprite(game.world.centerX, game.world.centerY+100, 'beastWake');
+    beast.anchor.set(0.5, 0.5);
+    
+    //beast waking up animation
+    beast.animations.add('beastWake');
+    beast.animations.play('beastWake', game.rnd.realInRange(1, 2.5), true);
+    
+    //info text what to do
+    var text = createText();
+
+    //blue background color
+    game.stage.backgroundColor = "#4488AA";
+
+    //character idle animation
+    char.animations.add('idle');
+    char.animations.play('idle', 30, true);
+    
+
+}
+
+    //sprite animation change function, hit sound and score++
+function change() {
+
+    char.loadTexture('stab', 1);
+    char.animations.add('stab');
+    char.animations.play('stab', 100, false);
+    //increase score
+    score++;
+    text2.setText('Score ' + score );
+    hit.play();
+}
+
+    //shake screen function
+function shake() {
+    //intensity and duration
+    game.camera.shake(0.005, 200);
+}
+
+    //info text's style
+function createText(y) {
+    var text = game.add.text(game.world.centerX, 60, 'Hit the beast when it\'s asleep');
+    text.anchor.set(0.5);
+    text.align = 'center';
+    text.font = 'Arial Black';
+    text.fontSize = 30;
+    text.fontWeight = 'bold';
+    text.fill = '#ffffff';
+    text.alpha = 1;
+    var tween = game.add.tween(text).to( { alpha: 0 }, 10000, "Linear", true);
+    tween.repeat(0);
+    return text;
+    
+}
+
+function update(){
+    //move cloud amd scale cloud randomly
+    if(sprite.x >= 1525)
+        {
+        game.add.tween(sprite).to ({x: -100, y:(game.rnd.integerInRange(80, 220)) }, 0.1, Phaser.Easing.Linear.None, true);
+        sprite.scale.setTo(game.rnd.realInRange(0.5, 1.5),game.rnd.realInRange(0.5, 1.5));
+        }
+        
+        if(score==10)
+    {
+     
+    var s = game.add.sprite(0, 0, 'achievement');
+    s.rotation = 0.14;
+    s.alpha = 0;
+    var tween2 = game.add.tween(s).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    tween2.repeat(0);
+    //repeat this only once!
+    var tada = game.add.audio('tada');
+    tada.play();
+    }
+    
+    //change character animation when press screen
+    game.input.onDown.addOnce(change, this);
+    //add screen shake when player press screen
+    game.input.onDown.add(shake, 20000, this);
+    
+    //play hit sound when player clicks screen
+    hit = game.add.audio('hit');
+
+}
+</script>
+</div>
+</body>
+</html>
