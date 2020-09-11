@@ -1,6 +1,6 @@
 # Game related portfolio
 
-[My website](https://JanneMatiasKytola.github.io) (Works best with edge browser, since it has flash games..)
+[My website](https://Kytol.github.io) (Works best with edge browser, since it has flash games..)
 
 ```
 To contact me use email: jannematiaskytola@gmail.com
