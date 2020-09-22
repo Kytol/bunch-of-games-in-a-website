@@ -1,6 +1,6 @@
 # Github pages free hosting test
 
-[My website](https://Kytol.github.io)
+[TestWebsite](https://Kytol.github.io)
 
 ```
 To contact me use email: @gmail.com
